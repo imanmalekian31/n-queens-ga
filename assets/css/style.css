@@ -1,0 +1,24 @@
+body {
+  padding-top: 80px;
+}
+
+#plot {
+  width: 560px;
+  height: 560px;
+  border: 1px solid gray;
+  margin-top: 10px;
+}
+
+[id^="square_"] {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  background-size: cover;
+}
+
+* {
+  box-sizing: content-box;
+}

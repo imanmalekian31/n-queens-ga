@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>8 Queens GA</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.rtl.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body class="">
+    <div class="row">
+      <div
+        class="col-12 d-flex justify-content-center align-items-center flex-column"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary w-50"
+          onclick="createUI()"
+        >
+          Reset
+        </button>
+        <div
+          id="log"
+          class="w-25 mt-2 text-center d-flex justify-content-between align-items-center"
+        ></div>
+        <div id="plot"></div>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="assets/js/ga.js"></script>
+<script>
+  createUI();
+  function createUI() {
+    const end_idx = init();
+
+    var plotElement = document.getElementById("plot");
+    plotElement.innerHTML = "";
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        var square = document.createElement("div");
+        square.id = `square_${i}_${j}`;
+        if (i % 2 === 0 && j % 2 !== 0) {
+          square.style.backgroundColor = "black";
+        } else if (i % 2 !== 0 && j % 2 === 0) {
+          square.style.backgroundColor = "black";
+        }
+
+        plotElement.appendChild(square);
+      }
+    }
+
+    var result = population[0];
+    for (let k = 0; k < result.col.length; k++) {
+      var square = document.querySelector(`#square_${k}_${result.col[k]}`);
+      square.style.backgroundImage = "url('./assets/images/queen.png')";
+    }
+
+    var fitness = document.getElementById("log");
+    fitness.innerHTML = `<div><h3>Errors :</h3><h4>${result.fitness}</h4></div><div><h3>Turn :</h3><h4>${end_idx}</h4></div>`;
+    plotElement.style.backgroundColor = "white";
+    if (!result.fitness) {
+      plotElement.style.backgroundColor = "green";
+    }
+  }
+</script>
