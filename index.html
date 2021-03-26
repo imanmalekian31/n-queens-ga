@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
 
-  <body class="">
-    <div class="row">
+  <body>
+    <div class="row m-0">
       <div
-        class="col-12 d-flex justify-content-center align-items-center flex-column"
+        class="col-12 p-0 d-flex justify-content-center align-items-center flex-column"
       >
         <button
           type="button"
@@ -28,7 +28,7 @@
         </button>
         <div
           id="log"
-          class="w-25 mt-2 text-center d-flex justify-content-between align-items-center"
+          class="w-50 mt-2 text-center d-flex justify-content-around align-items-center"
         ></div>
         <div id="plot"></div>
       </div>
@@ -64,7 +64,7 @@
     }
 
     var fitness = document.getElementById("log");
-    fitness.innerHTML = `<div><h3>Errors :</h3><h4>${result.fitness}</h4></div><div><h3>Turn :</h3><h4>${end_idx}</h4></div>`;
+    fitness.innerHTML = `<div><h3>Errors</h3><h4>${result.fitness}</h4></div><div><h3>Turn</h3><h4>${end_idx}</h4></div>`;
     plotElement.style.backgroundColor = "white";
     if (!result.fitness) {
       plotElement.style.backgroundColor = "green";

@@ -22,3 +22,15 @@ body {
 * {
   box-sizing: content-box;
 }
+
+@media (max-width: 576px) {
+  #plot {
+    width: 320px;
+    height: 320px;
+  }
+
+  [id^="square_"] {
+    width: 40px;
+    height: 40px;
+  }
+}
