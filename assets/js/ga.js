@@ -51,36 +51,40 @@ function fitness_evaluation(col) {
   return clashes;
 }
 
-function merge_population() {
-  var merged_population = [];
-  for (let i = 0; i < POPULATION_SIZE; i += 2) {
-    var simple_one = population[i].col;
-    var simple_two = population[i + 1].col;
-    var slice_idx = Math.floor(Math.random() * QUEENS_COUNT - 1);
+function merge_population(gn_1, gn_2) {
+  var slice_idx = Math.floor(Math.random() * QUEENS_COUNT - 1);
 
-    var slice_simple_one_part_1 = simple_one.slice(0, slice_idx);
-    var slice_simple_one_part_2 = simple_one.slice(slice_idx, QUEENS_COUNT);
+  var slice_gn_1_part_1 = gn_1.slice(0, slice_idx);
+  var slice_gn_1_part_2 = gn_1.slice(slice_idx, QUEENS_COUNT);
 
-    var slice_simple_two_part_1 = simple_two.slice(0, slice_idx);
-    var slice_simple_two_part_2 = simple_two.slice(slice_idx, QUEENS_COUNT);
+  var slice_gn_2_part_1 = gn_2.slice(0, slice_idx);
+  var slice_gn_2_part_2 = gn_2.slice(slice_idx, QUEENS_COUNT);
 
-    simple_one = new GA(
-      slice_simple_one_part_1.concat(slice_simple_two_part_2)
-    );
-    simple_two = new GA(
-      slice_simple_two_part_1.concat(slice_simple_one_part_2)
-    );
+  var new_gn_1 = new GA(slice_gn_1_part_1.concat(slice_gn_2_part_2));
+  var new_gn_2 = new GA(slice_gn_2_part_1.concat(slice_gn_1_part_2));
 
-    merged_population.push(...[simple_one, simple_two]);
-  }
-  population = merged_population;
-  sort_population();
+  return [new_gn_1, new_gn_2];
 }
 
 function init() {
+  //generate init population
   generate_init_population();
+
+  // merge loops
   for (let index = 0; index < MAX_LOOP; index++) {
-    merge_population();
+    //merge
+    var merged_population = [];
+    for (let i = 0; i < POPULATION_SIZE; i += 2) {
+      var gn_1 = population[i].col;
+      var gn_2 = population[i + 1].col;
+
+      var new_gns = merge_population(gn_1, gn_2);
+      merged_population.push(...new_gns);
+    }
+    population = merged_population;
+    sort_population();
+
+    //find best
     if (population[0].fitness === 0) {
       return index;
     }
