@@ -56,8 +56,7 @@ function merge_population() {
   for (let i = 0; i < POPULATION_SIZE; i += 2) {
     var simple_one = population[i].col;
     var simple_two = population[i + 1].col;
-
-    var slice_idx = Math.floor(Math.random() * QUEENS_COUNT);
+    var slice_idx = Math.floor(Math.random() * QUEENS_COUNT - 1);
 
     var slice_simple_one_part_1 = simple_one.slice(0, slice_idx);
     var slice_simple_one_part_2 = simple_one.slice(slice_idx, QUEENS_COUNT);
