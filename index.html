@@ -59,7 +59,7 @@
 
     var result = population[0];
     for (let k = 0; k < result.col.length; k++) {
-      var square = document.querySelector(`#square_${k}_${result.col[k]}`);
+      var square = document.querySelector(`#square_${result.col[k]}_${k}`);
       square.style.backgroundImage = "url('./assets/images/queen.png')";
     }
 
