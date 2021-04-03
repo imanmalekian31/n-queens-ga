@@ -66,17 +66,25 @@ function merge_population(gn_1, gn_2) {
   return [new_gn_1, new_gn_2];
 }
 
-function init() {
+function init_ga() {
   //generate init population
   generate_init_population();
 
   // merge loops
+  console.time("ga");
   for (let index = 0; index < MAX_LOOP; index++) {
     //merge
     var merged_population = [];
     for (let i = 0; i < POPULATION_SIZE; i += 2) {
       var gn_1 = population[i].col;
       var gn_2 = population[i + 1].col;
+
+      if (
+        i === POPULATION_SIZE - 2 &&
+        population[i].fitness < population[i + 1].fitness
+      ) {
+        gn_2 = population[i].col;
+      }
 
       var new_gns = merge_population(gn_1, gn_2);
       merged_population.push(...new_gns);
@@ -86,8 +94,10 @@ function init() {
 
     //find best
     if (population[0].fitness === 0) {
+      console.timeEnd("ga");
       return index;
     }
   }
+  console.timeEnd("ga");
   return MAX_LOOP;
 }
