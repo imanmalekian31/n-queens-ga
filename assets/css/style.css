@@ -2,11 +2,12 @@ body {
   padding-top: 80px;
 }
 
-#plot {
+[id^="plot_"] {
   width: 560px;
   height: 560px;
   border: 1px solid gray;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 [id^="square_"] {
@@ -24,7 +25,7 @@ body {
 }
 
 @media (max-width: 576px) {
-  #plot {
+  [id^="plot_"] {
     width: 320px;
     height: 320px;
   }
