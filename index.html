@@ -26,27 +26,41 @@
         >
           Reset
         </button>
+        <!-- ga -->
+        <h2 class="mt-2">Genetic algorithm</h2>
         <div
-          id="log"
+          id="log_ga"
           class="w-50 mt-2 text-center d-flex justify-content-around align-items-center"
         ></div>
-        <div id="plot"></div>
+        <div id="plot_ga"></div>
+        <!-- hill -->
+        <h2 class="mt-4">Hill climbing algorithm</h2>
+        <div
+          id="log_hill"
+          class="w-50 mt-2 text-center d-flex justify-content-around align-items-center"
+        ></div>
+        <div id="plot_hill"></div>
       </div>
     </div>
   </body>
 </html>
-<script src="assets/js/ga.js"></script>
+<script src="assets/js/genetic.js"></script>
+<script src="assets/js/hill-climbing.js"></script>
 <script>
   createUI();
   function createUI() {
-    const end_idx = init();
+    createUI_hill();
+    createUI_ga();
+  }
+  function createUI_ga() {
+    const end_idx = init_ga();
 
-    var plotElement = document.getElementById("plot");
+    var plotElement = document.getElementById("plot_ga");
     plotElement.innerHTML = "";
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 8; j++) {
         var square = document.createElement("div");
-        square.id = `square_${i}_${j}`;
+        square.id = `square_ga_${i}_${j}`;
         if (i % 2 === 0 && j % 2 !== 0) {
           square.style.backgroundColor = "black";
         } else if (i % 2 !== 0 && j % 2 === 0) {
@@ -59,12 +73,43 @@
 
     var result = population[0];
     for (let k = 0; k < result.col.length; k++) {
-      var square = document.querySelector(`#square_${result.col[k]}_${k}`);
+      var square = document.querySelector(`#square_ga_${result.col[k]}_${k}`);
       square.style.backgroundImage = "url('./assets/images/queen.png')";
     }
 
-    var fitness = document.getElementById("log");
+    var fitness = document.getElementById("log_ga");
     fitness.innerHTML = `<div><h3>Errors</h3><h4>${result.fitness}</h4></div><div><h3>Turn</h3><h4>${end_idx}</h4></div>`;
+    plotElement.style.backgroundColor = "white";
+    if (!result.fitness) {
+      plotElement.style.backgroundColor = "green";
+    }
+  }
+  function createUI_hill() {
+    var result = init_hill();
+
+    var plotElement = document.getElementById("plot_hill");
+    plotElement.innerHTML = "";
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        var square = document.createElement("div");
+        square.id = `square_hill_${i}_${j}`;
+        if (i % 2 === 0 && j % 2 !== 0) {
+          square.style.backgroundColor = "black";
+        } else if (i % 2 !== 0 && j % 2 === 0) {
+          square.style.backgroundColor = "black";
+        }
+
+        plotElement.appendChild(square);
+      }
+    }
+
+    for (let k = 0; k < result.col.length; k++) {
+      var square = document.querySelector(`#square_hill_${result.col[k]}_${k}`);
+      square.style.backgroundImage = "url('./assets/images/queen.png')";
+    }
+
+    var fitness = document.getElementById("log_hill");
+    fitness.innerHTML = `<div><h3>Errors</h3><h4>${result.fitness}</h4></div>`;
     plotElement.style.backgroundColor = "white";
     if (!result.fitness) {
       plotElement.style.backgroundColor = "green";
